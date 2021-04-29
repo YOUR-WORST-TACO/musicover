@@ -22,10 +22,23 @@ function createWindow() {
     const sendMessage = () => {
         if (win) {
             win.webContents.send('my-ipc-channel', {
-                message: 'Message communicated from the main process!'
+                message: 'Message from electron to React'
             });
         }
     };
+
+    ipcMain.on('ipc-reply', (_event, payload) => {
+        const result = payload.success ? 'SUCCESS:' : 'FAILURE:';
+
+        console.log(result + "Message from electron to React");
+    });
+
+    ipcMain.on('button-press', (_event, payload) => {
+        console.log(payload);
+        win.webContents.send('button-press-response', {
+            message: 'SUCCESS:' + payload
+        });
+    });
 
     const menuTemplate = [
         {

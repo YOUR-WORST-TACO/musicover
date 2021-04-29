@@ -41,6 +41,7 @@ const ResponseObj = () => {
 
     const handleResponse = (_event: any, response: Response) => {
         setMessage(response.message);
+        _event.sender.send('ipc-reply', { success: true });
     }
 
     useEffect((): any => {
@@ -55,13 +56,32 @@ const ResponseObj = () => {
 export const App = () => {
     const classes = useStyles();
 
+    const [message, setMessage] = useState('');
+
+    const handleResponse = (_event: any, response: Response) => {
+        setMessage(response.message);
+    }
+
+    const buttonPress = () => {
+        ipcRenderer.send("button-press", "Message from React to electron");
+    }
+
+    useEffect((): any => {
+        ipcRenderer.on('button-press-response', handleResponse);
+
+        return () => ipcRenderer.off('button-press-response', handleResponse);
+    }, []);
+
     return(
         <Grid container component="main">
             <CssBaseline />
-            <ResponseObj />
             <Grid item xs={6} sm={7} md={8}>
                 <DeviceSidebar />
-                <Button className={classes.button_colored}>Test Button</Button>
+                <Button className={classes.button_colored} onClick={buttonPress}>Test Button</Button>
+                <br/>
+                <>{message}</>
+                <br/>
+                <ResponseObj />
             </Grid>
             <Grid item xs={6} sm={5} md={4}>
                 <TrackSidebar />
