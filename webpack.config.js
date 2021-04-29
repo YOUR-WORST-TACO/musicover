@@ -16,7 +16,10 @@ module.exports = [
         output: {
             path: __dirname + '/dist',
             filename: 'electron.js'
-        }
+        },
+        resolve: {
+            extensions: [".ts", ".tsx", ".js", ".jsx", ".json"]
+        },
     },
     {
         mode: 'development',

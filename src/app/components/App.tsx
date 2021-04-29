@@ -3,13 +3,12 @@ import * as ReactDOM from 'react-dom';
 import { Box, Button, CssBaseline, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-const { ipcRenderer } = window.require('electron');
-
 import { DeviceSidebar } from "./DeviceSidebar";
 import { TrackSidebar } from "./TrackSidebar";
 import { AlbumTile } from "./AlbumTile";
 import { FolderTile } from "./FolderTile";
 import {useEffect, useState} from "react";
+import {MessageExample} from "./MessageExample";
 
 const useStyles = makeStyles({
     root: {
@@ -32,56 +31,18 @@ const useStyles = makeStyles({
     }
 });
 
-interface Response {
-    [message: string]: string;
-}
-
-const ResponseObj = () => {
-    const [message, setMessage] = useState('');
-
-    const handleResponse = (_event: any, response: Response) => {
-        setMessage(response.message);
-        _event.sender.send('ipc-reply', { success: true });
-    }
-
-    useEffect((): any => {
-        ipcRenderer.on('my-ipc-channel', handleResponse);
-
-        return () => ipcRenderer.off('my-ipc-channel', handleResponse);
-    }, []);
-
-    return <>{message}</>
-}
 
 export const App = () => {
     const classes = useStyles();
-
-    const [message, setMessage] = useState('');
-
-    const handleResponse = (_event: any, response: Response) => {
-        setMessage(response.message);
-    }
-
-    const buttonPress = () => {
-        ipcRenderer.send("button-press", "Message from React to electron");
-    }
-
-    useEffect((): any => {
-        ipcRenderer.on('button-press-response', handleResponse);
-
-        return () => ipcRenderer.off('button-press-response', handleResponse);
-    }, []);
 
     return(
         <Grid container component="main">
             <CssBaseline />
             <Grid item xs={6} sm={7} md={8}>
                 <DeviceSidebar />
-                <Button className={classes.button_colored} onClick={buttonPress}>Test Button</Button>
+                <Button className={classes.button_colored} >Test Button</Button>
                 <br/>
-                <>{message}</>
-                <br/>
-                <ResponseObj />
+                <MessageExample />
             </Grid>
             <Grid item xs={6} sm={5} md={4}>
                 <TrackSidebar />
