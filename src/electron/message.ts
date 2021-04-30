@@ -1,7 +1,7 @@
 import {ipcMain} from "electron";
-import {window} from "./window";
+import {remote} from 'electron';
 
-export const messageHandler = (window) => {
+export const messageHandler = (win) => {
     ipcMain.on('ipc-reply', (_event, payload) => {
         const result = payload.success ? 'SUCCESS:' : 'FAILURE:';
 
@@ -10,15 +10,36 @@ export const messageHandler = (window) => {
 
     ipcMain.on('test-ipc-channel', (_event, payload) => {
         console.log(payload);
-        window.webContents.send('ipc-reply', {
+        win.webContents.openDevTools()
+        win.webContents.send('ipc-reply', {
             message: 'SUCCESS:' + payload
         });
     });
+
+    ipcMain.on('window-control-event', (_event, payload) => {
+        switch (payload.event) {
+            case 'minimize':
+                win.minimize();
+                break;
+            case 'maximize':
+                win.maximize();
+                break;
+            case 'restore':
+                win.unmaximize();
+                break;
+            case 'close':
+                win.close();
+                break;
+            default:
+                break;
+        }
+    })
 }
 
 export const sendMessage = () => {
-    if (window) {
-        window.webContents.send('test-ipc-channel', {
+    const win = remote.getCurrentWindow();
+    if (win) {
+        win.webContents.send('test-ipc-channel', {
             message: 'Message from electron to React'
         });
     }

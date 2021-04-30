@@ -1,44 +1,39 @@
 import {BrowserWindow, Menu} from "electron";
 import {messageHandler, sendMessage} from "./message";
+import * as path from "path";
 
-export let window;
-
+let win;
 export const createWindow = () => {
     // Create the browser window.
-    window = new BrowserWindow({
+    win = new BrowserWindow({
         width: 1200,
         height: 900,
         minHeight: 700,
         minWidth: 1000,
+        title: "MusicOver",
+        frame: false,
         webPreferences: {
-            //devTools: false, // disable shift + ctrl + i
+            devTools: true, // disable shift + ctrl + i
             nodeIntegration: true,
             contextIsolation: false,
         }
     });
 
     // and load the index.html of the app.
-    window.loadFile('index.html').catch( e => {
+    win.loadFile('index.html').catch(e => {
         console.log(e);
     });
 
+    win.on('maximize', () => {
+        win.webContents.send('maximize-event', {maximized: true});
+    })
 
+    win.on('unmaximize', () => {
+        win.webContents.send('maximize-event', {maximized: false});
+    })
 
-    const menuTemplate = [
-        {
-            label: 'File',
-            submenu: [
-                {
-                    label: 'Action',
-                    click: sendMessage,
-                    accelerator: 'CmdOrCtrl+A'
-                }
-            ]
-        }
-    ];
+    win.removeMenu();
 
-    const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu);
+    messageHandler(win);
 
-    messageHandler(window);
 }

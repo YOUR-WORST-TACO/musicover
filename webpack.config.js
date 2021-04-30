@@ -7,11 +7,13 @@ module.exports = [
         entry: './src/electron/index.ts',
         target: 'electron-main',
         module: {
-            rules: [{
-                test: /\.ts$/,
-                include: /src/,
-                use: [{ loader: 'ts-loader' }]
-            }]
+            rules: [
+                {
+                    test: /\.ts$/,
+                    include: /src/,
+                    use: [{loader: 'ts-loader'}]
+                }
+            ]
         },
         output: {
             path: __dirname + '/dist',
@@ -26,11 +28,19 @@ module.exports = [
         entry: './src/app/index.tsx',
         target: 'electron-renderer',
         devtool: 'source-map',
-        module: { rules: [{
-                test: /\.ts(x?)$/,
-                include: /src/,
-                use: [{ loader: 'ts-loader' }]
-            }] },
+        module: {
+            rules: [
+                {
+                    test: /\.ts(x?)$/,
+                    include: /src/,
+                    use: [{loader: 'ts-loader'}]
+                },
+                {
+                    test: /\.(png|jpg|jpeg|gif)$/i,
+                    use: [{loader: 'url-loader'}]
+                },
+            ]
+        },
         output: {
             path: __dirname + '/dist',
             filename: 'react.js'

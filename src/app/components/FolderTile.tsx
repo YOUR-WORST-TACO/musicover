@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
-
-});
+const useStyles = makeStyles({});
 
 export const FolderTile = () => {
 

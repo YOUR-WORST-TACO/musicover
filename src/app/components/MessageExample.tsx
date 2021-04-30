@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import {Button} from "@material-ui/core";
 
-const { ipcRenderer } = window.require('electron');
+const {ipcRenderer} = window.require('electron');
 
 interface Response {
     [message: string]: string;
@@ -14,7 +14,7 @@ export const MessageExample = () => {
 
     const handleServerResponse = (_event: any, response: Response) => {
         setServerMessage(response.message);
-        _event.sender.send('ipc-reply', { success: true });
+        _event.sender.send('ipc-reply', {success: true});
     }
 
     const handleButtonResponse = (_event: any, response: Response) => {
@@ -25,7 +25,7 @@ export const MessageExample = () => {
         ipcRenderer.send("test-ipc-channel", {success: true});
     }
 
-    useEffect(():any => {
+    useEffect((): any => {
         ipcRenderer.on('ipc-reply', handleButtonResponse);
         ipcRenderer.on('test-ipc-channel', handleServerResponse);
     })
