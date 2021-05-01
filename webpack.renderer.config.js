@@ -1,4 +1,10 @@
 const plugins = require('./webpack.plugins');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+
+const testHandler = (path, obj) => {
+    const found = path.search('native_modules');
+};
 
 module.exports = {
     mode: 'development',
@@ -13,14 +19,11 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif)$/i,
                 use: [{loader: 'url-loader'}]
-            },
+            }
         ]
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"]
-    },
-    externals: {
-        'better-sqlite3': 'commonjs better-sqlite3',
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".node"]
     },
     plugins: plugins
 }

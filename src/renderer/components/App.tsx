@@ -3,6 +3,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import myImage from '../images/assassin.jpg';
+
 //import {Box, Button, CssBaseline, Grid, Paper} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -52,6 +54,7 @@ export const App = () => {
                 <CssBaseline/>
                 <Grid item xs={6} sm={7} md={8}>
                     <DeviceSidebar/>
+                    <img src={myImage}/>
                     {/*<MessageExample/>*/}
                 </Grid>
                 <Grid item xs={6} sm={5} md={4}>

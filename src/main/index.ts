@@ -1,6 +1,14 @@
 import {app, BrowserWindow, ipcMain, Menu} from 'electron';
-import {messageHandler} from "./message";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
+
+import {messageHandler} from "./message";
+import * as db from './helpers/database';
+
+// initialize electron remote
+require('@electron/remote/main').initialize();
+
+// expose db to renderer
+(<any>global).sharedVariable = {db: db};
 
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
     app.quit();
@@ -19,6 +27,7 @@ const createWindow = () => {
             devTools: true, // disable shift + ctrl + i
             nodeIntegration: true,
             contextIsolation: false,
+            enableRemoteModule: true,
             preload: MAIN_WINDOW_WEBPACK_ENTRY,
         }
     });
