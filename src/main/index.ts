@@ -2,7 +2,8 @@ import {app, BrowserWindow, ipcMain, Menu} from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 import {messageHandler} from "./message";
-import * as db from './helpers/database';
+import {db} from './helpers';
+import {isDev} from "./helpers/devHandler";
 
 // initialize electron remote
 require('@electron/remote/main').initialize();
@@ -32,14 +33,6 @@ const createWindow = () => {
         }
     });
 
-    // and load the index.html of the renderer.
-    /*if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-        win.loadURL('http://localhost:3000')
-    } else {
-        win.loadFile('index.html').catch(e => {
-            console.log(e);
-        });
-    }*/
     win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY).catch(e => {
         console.error(e.message);
     });
@@ -54,10 +47,11 @@ const createWindow = () => {
 
     win.removeMenu();
 
-    win.webContents.openDevTools();
+    if (isDev()) {
+        win.webContents.openDevTools();
+    }
 
     messageHandler(win);
-
 }
 
 app.on('ready', createWindow);

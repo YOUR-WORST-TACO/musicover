@@ -2,7 +2,6 @@ import * as React from "react";
 import {makeStyles} from '@material-ui/core/styles';
 
 const {ipcRenderer} = window.require('electron');
-import myImage from '../images/assassin.jpg';
 
 import {useEffect, useState} from "react";
 
@@ -128,7 +127,6 @@ export const TitleBar = (props) => {
                     <div className={`${classes.button} ${classes.minButton}`} onClick={minimizeHandler}>
                         <MinimizeIcon fontSize="small"/>
                     </div>
-                    <img src={myImage}/>
 
                     {!maximized
                         ? <div className={`${classes.button} ${classes.maxButton}`} onClick={maximizeHandler}>
