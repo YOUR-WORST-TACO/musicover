@@ -107,15 +107,15 @@ export const TitleBar = (props) => {
 
     const closeHandler = () => {
         ipcRenderer.send('window-control-event', {event: 'close'});
-    }
+    };
 
     const maximizeEventHandler = (_event, response) => {
         setMaximized(response.maximized);
-    }
+    };
 
     useEffect(() => {
         ipcRenderer.on('maximize-event', maximizeEventHandler);
-    })
+    });
 
     return (
         <header className={classes.titleBar}>

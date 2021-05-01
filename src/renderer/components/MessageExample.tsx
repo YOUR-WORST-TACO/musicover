@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
-import {Button} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
 
 const {ipcRenderer} = window.require('electron');
 

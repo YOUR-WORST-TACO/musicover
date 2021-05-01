@@ -5,7 +5,7 @@ export const messageHandler = (win) => {
     ipcMain.on('ipc-reply', (_event, payload) => {
         const result = payload.success ? 'SUCCESS:' : 'FAILURE:';
 
-        console.log(result + "Message from electron to React");
+        console.log(result + "Message from main to React");
     });
 
     ipcMain.on('test-ipc-channel', (_event, payload) => {
@@ -40,7 +40,7 @@ export const sendMessage = () => {
     const win = remote.getCurrentWindow();
     if (win) {
         win.webContents.send('test-ipc-channel', {
-            message: 'Message from electron to React'
+            message: 'Message from main to React'
         });
     }
 };

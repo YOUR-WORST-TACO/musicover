@@ -1,6 +1,15 @@
+// TODO clean up imports to save space
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Box, Button, CssBaseline, Grid, Paper} from '@material-ui/core';
+
+//import {Box, Button, CssBaseline, Grid, Paper} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
 import {makeStyles} from '@material-ui/core/styles';
 import {useEffect, useState} from "react";
 
@@ -10,6 +19,10 @@ import {AlbumTile} from "./AlbumTile";
 import {FolderTile} from "./FolderTile";
 import {MessageExample} from "./MessageExample";
 import {TitleBar} from "./TitleBar";
+
+import {getDirectoryContents} from '../helpers/testFileLoader';
+
+getDirectoryContents();
 
 const useStyles = makeStyles({
     '@global': {
@@ -29,7 +42,6 @@ const useStyles = makeStyles({
     },
 });
 
-
 export const App = () => {
     const classes = useStyles();
 
@@ -40,7 +52,7 @@ export const App = () => {
                 <CssBaseline/>
                 <Grid item xs={6} sm={7} md={8}>
                     <DeviceSidebar/>
-                    <MessageExample/>
+                    {/*<MessageExample/>*/}
                 </Grid>
                 <Grid item xs={6} sm={5} md={4}>
                     <TrackSidebar/>
