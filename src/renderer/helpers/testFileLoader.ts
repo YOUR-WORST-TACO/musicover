@@ -20,13 +20,13 @@ let fileCount = 0;
 let musicFileCount = 0;
 let notMusic = [];
 
-export const getDirectoryContents = async () => {
+export const getDirectoryContents = async (meta?: boolean, store?: boolean) => {
     try {
         fileCount = 0;
         musicFileCount = 0;
 
         const t0 = performance.now();
-        const files = await recurseFiles(sourceDir);
+        const files = await recurseFiles(sourceDir, true, true);
         const t1 = performance.now();
 
         const time = (t1 - t0)/1000
@@ -47,8 +47,16 @@ export const getDirectoryContents = async () => {
     }
 };
 
-const recurseFiles = async (directory) => {
+const recurseFiles = async (directory, meta?: boolean, store?:boolean) => {
     try {
+        if (meta === null) {
+            meta = false;
+        }
+
+        if (store === null) {
+            store = false;
+        }
+
         const directoryFiles = await fs.readdirSync(directory);
 
         let masterList = []
@@ -60,7 +68,7 @@ const recurseFiles = async (directory) => {
         for (const file of directoryFiles) {
             const fullPath = path.join(directory, file)
             if (await fs.statSync(fullPath).isDirectory()) {
-                const childDirectory = await recurseFiles(fullPath);
+                const childDirectory = await recurseFiles(fullPath, meta, store);
                 if (childDirectory.length > 0) {
                     masterList = masterList.concat(childDirectory);
                 }

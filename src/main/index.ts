@@ -56,9 +56,9 @@ const createWindow = () => {
 
     win.removeMenu();
 
-    //if (isDev()) {
+    if (isDev()) {
         win.webContents.openDevTools();
-    //}
+    }
 
     messageHandler(win);
 }

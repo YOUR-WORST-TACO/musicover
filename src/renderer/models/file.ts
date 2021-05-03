@@ -1,4 +1,4 @@
-import {db} from "../helpers/database";
+import {db} from "../helpers/database/";
 import * as path from "path";
 
 export const schema =

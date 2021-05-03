@@ -1,12 +1,12 @@
 import Database = require('better-sqlite3');
 import * as path from "path";
-import {config} from "../renderer/helpers/database";
+import DBConfig from "../renderer/helpers/database/config";
 
 import {suite, test} from "@testdeck/mocha";
 import {expect} from "chai";
 
 const connection = new Database(path.join(__dirname, 'testdb.db'), {});
-config({db: {connection:connection}});
+DBConfig({db: connection});
 import * as settings from '../renderer/models/settings';
 
 @suite
