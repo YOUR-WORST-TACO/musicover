@@ -4,9 +4,12 @@ import {App} from "./components/App";
 import * as settings from './models/settings';
 
 settings.set("test", "my value");
-console.log("Test is", settings.get('test'));
 settings.set("test", "a new value");
-console.log("Test is", settings.get('test'));
-console.log("This should be undefined:", settings.get('fake value'));
+settings.set("delete", 'who cares');
+settings.set("delete", null);
+settings.set("test1", 12);
+settings.set("test2", 13.12);
+settings.set("test3", {myTest: "test", things: [1,2,3]});
+settings.set("test4", [12, 12, 12])
 
 ReactDOM.render(<App />, document.getElementById('root'));
