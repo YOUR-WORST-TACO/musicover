@@ -9,7 +9,8 @@
     "start": "cross-env NODE_ENV=development electron-forge start",
     "package": "cross-env NODE_ENV=production electron-forge package",
     "make": "cross-env NODE_ENV=production electron-forge make",
-    "publish": "cross-env NODE_ENV=production electron-forge publish"
+    "publish": "cross-env NODE_ENV=production electron-forge publish",
+    "test:renderer": "mocha src/tests/**/*.test.ts"
   },
   "config": {
     "forge": "./forge.config.js"
@@ -24,14 +25,19 @@
     "@electron/remote": "^1.1.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@testdeck/mocha": "^0.1.2",
     "@types/better-sqlite3": "^5.4.1",
+    "@types/chai": "^4.2.17",
     "@types/electron": "^1.6.10",
+    "@types/mocha": "^8.2.2",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "@vercel/webpack-asset-relocator-loader": "^1.4.0",
+    "chai": "^4.3.4",
     "concurrently": "^6.0.2",
     "cross-env": "^7.0.3",
     "electron": "^12.0.5",
+    "mocha": "^8.3.2",
     "node-loader": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

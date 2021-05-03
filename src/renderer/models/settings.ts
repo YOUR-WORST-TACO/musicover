@@ -1,4 +1,4 @@
-import db from "../helpers/database";
+import {db} from "../helpers/database";
 
 export const schema =
     'CREATE TABLE IF NOT EXISTS settings (\n' +

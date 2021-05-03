@@ -7,14 +7,6 @@ import * as File from '../models/file'
 
 const sourceDir = "C:/Users/Steph/OneDrive/Music";
 
-const testFile = "C:/Users/Steph/Pictures/test.txt";
-
-// TODO remove all traces of sha256, it is waaaaaaay to slow
-const contents = fs.readFileSync(testFile, {encoding:'base64', flag:'r'});
-const hash = sha256.create();
-const testing = hash.update(contents).hex();
-console.log(testing);
-
 const musicExtensionWhitelist = [
     '.mp3', '.wav', '.flac', '.aiff', '.aac', '.ape', '.mp2', '.asf', '.mka',
     '.mkv', '.mpc', '.mp4', '.m4a', '.m4v', '.ogg', '.webm', '.wv', 'wma'
