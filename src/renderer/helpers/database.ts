@@ -1,10 +1,12 @@
-//import Database = require('better-sqlite3');
-const Database = window.require('electron').remote.require('better-sqlite3');
-import * as path from "path";
+const {getGlobal} = require('@electron/remote');
+const db = getGlobal('sharedVariable').db;
 
-const location = path.join(__dirname, 'database.db')
-console.log(location);
-const options = {
-    verbose: console.log,
-};
-export const db = new Database(location, options);
+db.connection.exec('CREATE TABLE IF NOT EXISTS contacts (\n' +
+    '\tcontact_id INTEGER PRIMARY KEY,\n' +
+    '\tfirst_name TEXT NOT NULL,\n' +
+    '\tlast_name TEXT NOT NULL,\n' +
+    '\temail TEXT NOT NULL UNIQUE,\n' +
+    '\tphone TEXT NOT NULL UNIQUE\n' +
+    ');')
+
+export default db;

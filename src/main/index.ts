@@ -2,9 +2,18 @@ import {app, BrowserWindow, ipcMain, Menu} from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 import {messageHandler} from "./message";
-import {db} from './helpers';
+//import {db} from './helpers';
 import {isDev} from "./helpers/devHandler";
+import * as path from "path";
 
+import database from "./helpers/database";
+
+const db = database(
+    path.join(__dirname, 'database.db'),
+    {
+        verbose: isDev() ? console.log : null,
+    }
+)
 // initialize electron remote
 require('@electron/remote/main').initialize();
 
@@ -47,9 +56,9 @@ const createWindow = () => {
 
     win.removeMenu();
 
-    if (isDev()) {
+    //if (isDev()) {
         win.webContents.openDevTools();
-    }
+    //}
 
     messageHandler(win);
 }

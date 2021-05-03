@@ -1,16 +1,12 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import {App} from "./components/App";
+import * as settings from './models/settings';
 
-const {getGlobal} = require('@electron/remote');
-const db = getGlobal('sharedVariable').db;
-
-db.database.exec('CREATE TABLE IF NOT EXISTS contacts (\n' +
-    '\tcontact_id INTEGER PRIMARY KEY,\n' +
-    '\tfirst_name TEXT NOT NULL,\n' +
-    '\tlast_name TEXT NOT NULL,\n' +
-    '\temail TEXT NOT NULL UNIQUE,\n' +
-    '\tphone TEXT NOT NULL UNIQUE\n' +
-    ');')
+settings.set("test", "my value");
+console.log("Test is", settings.get('test'));
+settings.set("test", "a new value");
+console.log("Test is", settings.get('test'));
+console.log("This should be undefined:", settings.get('fake value'));
 
 ReactDOM.render(<App />, document.getElementById('root'));
