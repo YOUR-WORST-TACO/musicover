@@ -6,7 +6,8 @@ export const schema =
     '\tfile_id INTEGER PRIMARY KEY AUTOINCREMENT,\n' +
     '\tfile_name TEXT NOT NULL,\n' +
     '\tfile_full_name TEXT NOT NULL,\n' +
-    '\tfile_path TEXT NOT NULL\n' +
+    '\tfile_path TEXT NOT NULL\n,' +
+    '\tfile_synced BOOLEAN' +
     ');';
 
 const schemaQuery = db.connection.prepare(schema);

@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as mm from 'music-metadata';
-import {sha256} from "js-sha256";
 
 import * as File from '../models/file'
 
@@ -94,7 +93,9 @@ const recurseFiles = async (directory) => {
 
                         musicFileCount++;
                     } else {
+                        // TODO remove post testing
                         notMusic.push(file);
+
                         files.files.push(fileData);
                     }
                 }

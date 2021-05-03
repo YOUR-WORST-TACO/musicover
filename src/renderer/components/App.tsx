@@ -22,7 +22,9 @@ import {TitleBar} from "./TitleBar";
 
 import {getDirectoryContents} from '../helpers/testFileLoader';
 
-//getDirectoryContents();
+(async () => {
+        console.log(await getDirectoryContents());
+    })();
 
 const useStyles = makeStyles({
     '@global': {
