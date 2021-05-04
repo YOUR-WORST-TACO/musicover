@@ -4,7 +4,10 @@ import * as mm from 'music-metadata';
 
 import * as File from '../models/file'
 
-const sourceDir = "C:/Users/Steph/OneDrive/Music";
+import './jsonStore';
+
+//const sourceDir = "C:/Users/Steph/OneDrive/Music";
+const sourceDir = '/home/taco/Music';
 
 const musicExtensionWhitelist = [
     '.mp3', '.wav', '.flac', '.aiff', '.aac', '.ape', '.mp2', '.asf', '.mka',
@@ -26,7 +29,7 @@ export const getDirectoryContents = async (meta?: boolean, store?: boolean) => {
         musicFileCount = 0;
 
         const t0 = performance.now();
-        const files = await recurseFiles(sourceDir, true, true);
+        const files = await recurseFiles(sourceDir, false, false);
         const t1 = performance.now();
 
         const time = (t1 - t0)/1000
@@ -66,7 +69,7 @@ const recurseFiles = async (directory, meta?: boolean, store?:boolean) => {
         }
 
         for (const file of directoryFiles) {
-            const fullPath = path.join(directory, file)
+            const fullPath = path.join(directory, file);
             if (await fs.statSync(fullPath).isDirectory()) {
                 const childDirectory = await recurseFiles(fullPath, meta, store);
                 if (childDirectory.length > 0) {
@@ -87,16 +90,20 @@ const recurseFiles = async (directory, meta?: boolean, store?:boolean) => {
                     fileCount++;
 
                     // TODO check if file exists in db
-                    const inDB = File.findByName(fullPath)
-                    if (!inDB) {
-                        File.save(file, directory, fullPath);
-                        fileData.newFile = true;
+                    if (store) {
+                        const inDB = File.findByName(fullPath)
+                        if (!inDB) {
+                            File.save(file, directory, fullPath);
+                            fileData.newFile = true;
+                        }
                     }
 
                     if (musicExtensionWhitelist.includes(path.extname(file))) {
                         // TODO handle missing data here
                         fileData.isMusicFile = true;
-                        fileData.metadata = await mm.parseFile(fullPath); // load metadata
+                        if (meta) {
+                            fileData.metadata = await mm.parseFile(fullPath); // load metadata
+                        }
                         files.files.push(fileData);
 
                         musicFileCount++;

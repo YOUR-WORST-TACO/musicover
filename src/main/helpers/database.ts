@@ -1,6 +1,5 @@
 import Database = require('better-sqlite3');
 import * as path from "path";
-import {isDev} from "./devHandler";
 
 export default (dbPath, options) => {
     if (!options) {
